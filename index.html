@@ -79,34 +79,19 @@
         </section>
 
         <!-- HAMBÚRGUERES -->
-        <section id="cat-burger">
-            <h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🍔 Hambúrgueres</h2>
-            <div class="space-y-3" id="burgers-list"></div>
-        </section>
+        <section id="cat-burger"><h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🍔 Hambúrgueres</h2><div class="space-y-3" id="burgers-list"></div></section>
 
         <!-- CACHORRO QUENTE -->
-        <section id="cat-hotdog">
-            <h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🌭 Cachorro Quente</h2>
-            <div class="space-y-3" id="hotdogs-list"></div>
-        </section>
+        <section id="cat-hotdog"><h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🌭 Cachorro Quente</h2><div class="space-y-3" id="hotdogs-list"></div></section>
 
         <!-- PIZZAS -->
-        <section id="cat-pizza">
-            <h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🍕 Pizzas Tamanho G</h2>
-            <div class="space-y-3" id="pizzas-list"></div>
-        </section>
+        <section id="cat-pizza"><h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🍕 Pizzas Tamanho G</h2><div class="space-y-3" id="pizzas-list"></div></section>
 
         <!-- BEIRUTES -->
-        <section id="cat-beirute">
-            <h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🥙 Beirutes</h2>
-            <div class="space-y-3" id="beirutes-list"></div>
-        </section>
+        <section id="cat-beirute"><h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🥙 Beirutes</h2><div class="space-y-3" id="beirutes-list"></div></section>
 
         <!-- SUCOS -->
-        <section id="cat-suco">
-            <h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🥤 Sucos da Polpa</h2>
-            <div class="space-y-3" id="sucos-list"></div>
-        </section>
+        <section id="cat-suco"><h2 class="text-red-600 font-bold border-b border-yellow-400 mb-4 text-sm uppercase">🥤 Sucos da Polpa</h2><div class="space-y-3" id="sucos-list"></div></section>
 
         <!-- AÇAÍ -->
         <section id="cat-acai">
@@ -115,14 +100,43 @@
         </section>
     </div>
 
-    <!-- CARRINHO FLUTUANTE -->
+    <!-- CARRINHO FLUTUANTE (ATUALIZADO COM VER PEDIDOS) -->
     <div id="cart-footer" class="fixed bottom-0 left-0 right-0 p-4 z-50 hidden">
         <div class="bg-red-600 text-white p-4 rounded-2xl flex justify-between items-center shadow-2xl">
-            <div onclick="openSacola()" class="cursor-pointer">
+            <div class="flex-1">
                 <p id="c-count" class="text-[9px] font-bold opacity-80 uppercase">0 ITENS</p>
                 <p id="c-total" class="text-lg font-bold">R$ 0,00</p>
             </div>
-            <button onclick="openCheckout()" class="bg-yellow-400 text-red-700 px-6 py-2 rounded-xl font-bold uppercase text-xs">Finalizar</button>
+            <div class="flex space-x-2">
+                <button onclick="openSacola()" class="bg-white/20 text-white px-4 py-2 rounded-xl font-bold uppercase text-[10px]">Ver Pedidos</button>
+                <button onclick="openCheckout()" class="bg-yellow-400 text-red-700 px-6 py-2 rounded-xl font-bold uppercase text-[10px]">Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AÇAÍ (LÓGICA DE PREÇO PROFISSIONAL) -->
+    <div id="modal-acai" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col justify-end">
+        <div class="bg-white w-full max-h-[90vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
+            <h2 id="acai-nome-modal" class="text-lg font-bold text-purple-600 uppercase italic">Personalizar Açaí</h2>
+            <p class="text-[10px] text-gray-400 mb-4">Escolha até 5 itens grátis. Extras: Acomp. R$1 | Fruta R$2 | Calda R$1</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <p class="font-bold text-[11px] uppercase mb-2">Acompanhamentos</p>
+                    <div class="grid grid-cols-2 gap-2" id="acai-acompanhamentos"></div>
+                </div>
+                <div>
+                    <p class="font-bold text-[11px] uppercase mb-2">Frutas (+R$2 se extra)</p>
+                    <div class="grid grid-cols-2 gap-2" id="acai-frutas"></div>
+                </div>
+                <div>
+                    <p class="font-bold text-[11px] uppercase mb-2">Caldas (+R$1 se extra)</p>
+                    <div class="grid grid-cols-2 gap-2" id="acai-caldas"></div>
+                </div>
+            </div>
+
+            <button onclick="confirmAcai()" class="w-full bg-purple-600 text-white py-4 rounded-2xl font-bold mt-6 uppercase shadow-lg">Adicionar ao Carrinho</button>
+            <button onclick="closeMod('modal-acai')" class="w-full py-3 text-gray-400 text-xs font-bold uppercase">Cancelar</button>
         </div>
     </div>
 
@@ -138,6 +152,19 @@
         </div>
     </div>
 
+    <!-- MODAL SACOLA (VER PEDIDOS / REMOVER) -->
+    <div id="modal-sacola" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col justify-end">
+        <div class="bg-white w-full max-h-[80vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
+            <h2 class="text-lg font-bold mb-4 uppercase text-red-600">Seu Pedido</h2>
+            <div id="sacola-lista" class="space-y-3"></div>
+            <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                <div class="flex justify-between font-bold text-sm"><span>Total:</span><span id="sacola-total">R$ 0,00</span></div>
+            </div>
+            <button onclick="openCheckout()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold mt-4 uppercase">Finalizar Pedido</button>
+            <button onclick="closeMod('modal-sacola')" class="w-full py-4 text-gray-400 text-[10px] font-bold uppercase">Continuar Comprando</button>
+        </div>
+    </div>
+
     <!-- MODAL SUCO -->
     <div id="modal-suco" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col justify-end">
         <div class="bg-white w-full rounded-t-[30px] p-6 modal-up">
@@ -147,15 +174,6 @@
                 <button onclick="confirmSuco('Com Leite', 7)" class="p-4 border-2 rounded-2xl font-bold text-xs border-blue-400 text-blue-600">🥛 COM LEITE<br>R$ 7,00</button>
             </div>
             <button onclick="closeMod('modal-suco')" class="w-full py-2 text-gray-400 font-bold uppercase text-xs">Voltar</button>
-        </div>
-    </div>
-
-    <!-- MODAL SACOLA (PARA REMOVER ITENS) -->
-    <div id="modal-sacola" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col justify-end">
-        <div class="bg-white w-full max-h-[80vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
-            <h2 class="text-lg font-bold mb-4 uppercase text-red-600">Itens na Sacola</h2>
-            <div id="sacola-lista" class="space-y-3"></div>
-            <button onclick="closeMod('modal-sacola')" class="w-full bg-gray-800 text-white py-4 rounded-2xl font-bold mt-6 uppercase">Fechar</button>
         </div>
     </div>
 
@@ -184,7 +202,6 @@
     </div>
 
     <script>
-        // DADOS
         const saboresPastel = ["Queijo Coalho", "Catupiry", "Cheddar", "Mussarela", "Prato", "Bacon", "Carne Moída", "Camarão", "Calabresa", "Ovo Codorna", "Frango", "Charque", "Presunto"];
         const listaBurgers = [
             {n: 'X-Burguer Tradicional', p: 6, d: 'Pão, carne, salada e molho.'},
@@ -213,69 +230,96 @@
         const listaBeirutes = [{n: 'Beirute Frango', p: 24}, {n: 'Beirute Calabresa', p: 24}, {n: 'Beirute Charque', p: 27}, {n: 'Beirute Camarão', p: 35}];
         const listaAcai = [{g: '160g', p: 10}, {g: '220g', p: 12}, {g: '320g', p: 16}];
 
-        let carrinho = []; let total = 0; let m = 'Entrega'; let pgt = ''; let sucoAtual = "";
+        const acaiItems = {
+            acompanhamentos: ["Leite em Pó", "Paçoca", "Granola", "Ovomaltine", "Amendoim", "Chocoball"],
+            frutas: ["Banana", "Morango", "Uva"],
+            caldas: ["Leite Condensado", "Chocolate", "Morango"]
+        };
 
-        // RENDERIZAÇÃO
+        let carrinho = []; let total = 0; let m = 'Entrega'; let pgt = ''; let sucoAtual = ""; let acaiAtual = {g: '', p: 0};
+
         function render() {
-            document.getElementById('burgers-list').innerHTML = listaBurgers.map(b => `
-                <div class="product-card p-4 shadow-sm flex justify-between items-center">
-                    <div class="flex-1 pr-3"><h3 class="font-bold text-[11px] uppercase">${b.n}</h3><p class="text-[9px] text-gray-400 italic">${b.d}</p><p class="text-red-600 font-bold">R$ ${b.p.toFixed(2)}</p></div>
-                    <button onclick="addCart('${b.n}', ${b.p})" class="bg-red-600 text-white w-9 h-9 rounded-xl font-bold">+</button>
-                </div>`).join('');
+            document.getElementById('burgers-list').innerHTML = listaBurgers.map(b => `<div class="product-card p-4 shadow-sm flex justify-between items-center"><div class="flex-1 pr-3"><h3 class="font-bold text-[11px] uppercase">${b.n}</h3><p class="text-[9px] text-gray-400 italic">${b.d}</p><p class="text-red-600 font-bold">R$ ${b.p.toFixed(2)}</p></div><button onclick="addCart('${b.n}', ${b.p})" class="bg-red-600 text-white w-9 h-9 rounded-xl font-bold">+</button></div>`).join('');
+            document.getElementById('hotdogs-list').innerHTML = listaHotdogs.map(h => `<div class="product-card p-4 shadow-sm flex justify-between items-center"><div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${h.n}</h3><p class="text-[9px] text-red-600 font-bold italic">15cm: R$ ${h.p15} | 30cm: R$ ${h.p30}</p></div><div class="flex space-x-1"><button onclick="addCart('${h.n} 15cm', ${h.p15})" class="bg-red-600 text-white px-2 py-1 rounded-lg text-[8px] font-bold italic">15CM</button><button onclick="addCart('${h.n} 30cm', ${h.p30})" class="bg-red-600 text-white px-2 py-1 rounded-lg text-[8px] font-bold italic">30CM</button></div></div>`).join('');
+            document.getElementById('pizzas-list').innerHTML = listaPizzas.map(pz => `<div class="product-card p-4 shadow-sm flex justify-between items-center"><div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${pz.n}</h3><p class="text-red-600 font-bold">R$ ${pz.p.toFixed(2)}</p></div><div class="flex flex-col space-y-1"><button onclick="addCart('${pz.n}', ${pz.p})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-[8px] font-bold uppercase">Simples</button><button onclick="addCart('${pz.n} + Borda', ${pz.p+3})" class="bg-yellow-500 text-white px-3 py-1 rounded-lg text-[8px] font-bold uppercase">+ Borda R$3</button></div></div>`).join('');
+            document.getElementById('beirutes-list').innerHTML = listaBeirutes.map(br => `<div class="product-card p-4 shadow-sm flex justify-between items-center"><div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${br.n}</h3><p class="text-red-600 font-bold">R$ ${br.p.toFixed(2)}</p></div><button onclick="addCart('${br.n}', ${br.p})" class="bg-red-600 text-white w-9 h-9 rounded-xl font-bold">+</button></div>`).join('');
+            document.getElementById('sucos-list').innerHTML = sucosPolpa.map(s => `<div class="product-card p-4 shadow-sm flex justify-between items-center"><div class="flex-1 text-[11px] font-bold uppercase italic">${s}</div><button onclick="abrirSuco('${s}')" class="bg-red-600 text-white px-4 py-2 rounded-xl text-[9px] font-bold uppercase italic shadow-md">Escolher</button></div>`).join('');
             
-            document.getElementById('hotdogs-list').innerHTML = listaHotdogs.map(h => `
-                <div class="product-card p-4 shadow-sm flex justify-between items-center">
-                    <div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${h.n}</h3><p class="text-[9px] text-red-600 font-bold italic">15cm: R$ ${h.p15} | 30cm: R$ ${h.p30}</p></div>
-                    <div class="flex space-x-1"><button onclick="addCart('${h.n} 15cm', ${h.p15})" class="bg-red-600 text-white px-2 py-1 rounded-lg text-[8px] font-bold italic">15CM</button><button onclick="addCart('${h.n} 30cm', ${h.p30})" class="bg-red-600 text-white px-2 py-1 rounded-lg text-[8px] font-bold italic">30CM</button></div>
-                </div>`).join('');
-
-            document.getElementById('pizzas-list').innerHTML = listaPizzas.map(pz => `
-                <div class="product-card p-4 shadow-sm flex justify-between items-center">
-                    <div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${pz.n}</h3><p class="text-red-600 font-bold">R$ ${pz.p.toFixed(2)}</p></div>
-                    <div class="flex flex-col space-y-1"><button onclick="addCart('${pz.n}', ${pz.p})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-[8px] font-bold uppercase">Simples</button><button onclick="addCart('${pz.n} + Borda', ${pz.p+3})" class="bg-yellow-500 text-white px-3 py-1 rounded-lg text-[8px] font-bold uppercase">+ Borda R$3</button></div>
-                </div>`).join('');
-
-            document.getElementById('beirutes-list').innerHTML = listaBeirutes.map(br => `
-                <div class="product-card p-4 shadow-sm flex justify-between items-center">
-                    <div class="flex-1"><h3 class="font-bold text-[11px] uppercase">${br.n}</h3><p class="text-red-600 font-bold">R$ ${br.p.toFixed(2)}</p></div>
-                    <button onclick="addCart('${br.n}', ${br.p})" class="bg-red-600 text-white w-9 h-9 rounded-xl font-bold">+</button>
-                </div>`).join('');
-
-            document.getElementById('sucos-list').innerHTML = sucosPolpa.map(s => `
-                <div class="product-card p-4 shadow-sm flex justify-between items-center">
-                    <div class="flex-1 text-[11px] font-bold uppercase italic">${s}</div>
-                    <button onclick="abrirSuco('${s}')" class="bg-red-600 text-white px-4 py-2 rounded-xl text-[9px] font-bold uppercase italic shadow-md">Escolher</button>
-                </div>`).join('');
-
+            // Render Açaí
             document.getElementById('acai-list').innerHTML = listaAcai.map(a => `
                 <div class="product-card p-4 shadow-sm flex justify-between items-center">
                     <div class="flex-1"><h3 class="font-bold text-[11px] uppercase italic">Açaí ${a.g}</h3><p class="text-purple-600 font-bold italic">R$ ${a.p.toFixed(2)}</p></div>
-                    <button onclick="addCart('Açaí ${a.g}', ${a.p}, 'Monte no balcão')" class="bg-purple-600 text-white px-4 py-2 rounded-xl text-[9px] font-bold uppercase shadow-md italic italic">Pedir</button>
+                    <button onclick="abrirAcai('${a.g}', ${a.p})" class="bg-purple-600 text-white px-4 py-2 rounded-xl text-[9px] font-bold uppercase shadow-md italic">Escolher</button>
                 </div>`).join('');
 
             document.getElementById('pastel-options').innerHTML = saboresPastel.map(s => `<div><input type="checkbox" id="pt-${s}" class="hidden p-check" value="${s}"><label for="pt-${s}" class="block p-2 border rounded-xl text-center text-[9px] font-bold bg-gray-50">${s}</label></div>`).join('');
+            
+            // Render Opções Açaí
+            document.getElementById('acai-acompanhamentos').innerHTML = acaiItems.acompanhamentos.map(i => `<div><input type="checkbox" id="ac-${i}" class="hidden ac-check" value="${i}" data-type="acomp"><label for="ac-${i}" class="block p-2 border rounded-xl text-center text-[9px] font-bold bg-gray-50">${i}</label></div>`).join('');
+            document.getElementById('acai-frutas').innerHTML = acaiItems.frutas.map(i => `<div><input type="checkbox" id="ac-${i}" class="hidden ac-check" value="${i}" data-type="fruta"><label for="ac-${i}" class="block p-2 border rounded-xl text-center text-[9px] font-bold bg-gray-50">${i}</label></div>`).join('');
+            document.getElementById('acai-caldas').innerHTML = acaiItems.caldas.map(i => `<div><input type="checkbox" id="ac-${i}" class="hidden ac-check" value="${i}" data-type="calda"><label for="ac-${i}" class="block p-2 border rounded-xl text-center text-[9px] font-bold bg-gray-50">${i}</label></div>`).join('');
         }
 
-        // AÇÕES
         function addCart(n, p, obs = "") {
-            carrinho.push({n, p, obs}); total += p;
+            carrinho.push({n, p, obs, id: Date.now()}); 
+            total += p;
             atualizarBarra();
+        }
+
+        function abrirAcai(g, p) {
+            acaiAtual = {g, p};
+            document.getElementById('acai-nome-modal').innerText = `Açaí ${g}`;
+            document.querySelectorAll('.ac-check').forEach(c => c.checked = false);
+            document.getElementById('modal-acai').classList.remove('hidden');
+            document.getElementById('modal-acai').classList.add('flex');
+        }
+
+        function confirmAcai() {
+            const checks = Array.from(document.querySelectorAll('.ac-check:checked'));
+            if(checks.length === 0) return alert("Escolha os itens do seu açaí!");
+            
+            let extra = 0;
+            let nomes = [];
+            
+            checks.forEach((c, idx) => {
+                nomes.push(c.value);
+                if(idx >= 5) { // A partir do 6º item cobra
+                    const tipo = c.getAttribute('data-type');
+                    if(tipo === 'acomp') extra += 1;
+                    if(tipo === 'fruta') extra += 2;
+                    if(tipo === 'calda') extra += 1;
+                }
+            });
+
+            addCart(`Açaí ${acaiAtual.g} (${nomes.join(', ')})`, acaiAtual.p + extra);
+            closeMod('modal-acai');
         }
 
         function atualizarBarra() {
             document.getElementById('cart-footer').classList.toggle('hidden', carrinho.length === 0);
             document.getElementById('c-count').innerText = carrinho.length + " ITENS";
             document.getElementById('c-total').innerText = "R$ " + total.toFixed(2);
+            document.getElementById('sacola-total').innerText = "R$ " + total.toFixed(2);
         }
 
-        function removerItem(i) {
-            total -= carrinho[i].p; carrinho.splice(i, 1);
-            atualizarBarra(); openSacola();
+        function removerItem(id) {
+            const index = carrinho.findIndex(it => it.id === id);
+            total -= carrinho[index].p; 
+            carrinho.splice(index, 1);
+            atualizarBarra(); 
+            openSacola();
         }
 
         function openSacola() {
+            if(carrinho.length === 0) return closeMod('modal-sacola');
             document.getElementById('modal-sacola').classList.remove('hidden'); document.getElementById('modal-sacola').classList.add('flex');
-            document.getElementById('sacola-lista').innerHTML = carrinho.map((it, idx) => `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border"><div class="text-[10px] font-bold uppercase italic">${it.n}<br><span class="text-red-600 italic">R$ ${it.p.toFixed(2)}</span></div><button onclick="removerItem(${idx})" class="text-red-600 text-lg"><i class="fas fa-trash"></i></button></div>`).join('');
+            document.getElementById('sacola-lista').innerHTML = carrinho.map((it) => `
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border">
+                    <div class="text-[10px] font-bold uppercase pr-4">
+                        ${it.n}<br><span class="text-red-600">R$ ${it.p.toFixed(2)}</span>
+                    </div>
+                    <button onclick="removerItem(${it.id})" class="text-red-600 text-lg"><i class="fas fa-trash"></i></button>
+                </div>`).join('');
         }
 
         function openPastel() { document.getElementById('modal-pastel').classList.remove('hidden'); document.getElementById('modal-pastel').classList.add('flex'); }
@@ -290,7 +334,6 @@
 
         function abrirSuco(s) { sucoAtual = s; document.getElementById('suco-nome').innerText = s; document.getElementById('modal-suco').classList.remove('hidden'); document.getElementById('modal-suco').classList.add('flex'); }
         function confirmSuco(tipo, preco) { addCart(`Suco ${sucoAtual} (${tipo})`, preco); closeMod('modal-suco'); }
-
         function openCheckout() { closeMod('modal-sacola'); document.getElementById('modal-checkout').classList.remove('hidden'); document.getElementById('modal-checkout').classList.add('flex'); }
         function closeMod(id) { document.getElementById(id).classList.add('hidden'); }
         function setM(mode) { m = mode; document.getElementById('m-del').className = mode === 'Entrega' ? 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-red-600 text-red-600 bg-red-50' : 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400'; document.getElementById('c-end').classList.toggle('hidden', mode === 'Retirada'); }
