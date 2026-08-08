@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastel da Aline - Cardápio Interativo</title>
+    <title>Pastel da Aline - Cardápio Digital Profissional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #fffdf0; }
         .bg-yellow-aline { background-color: #FFD700; }
         .text-red-aline { color: #E60000; }
         .bg-red-aline { background-color: #E60000; }
-        
         .header-bg { 
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=800'); 
-            background-size: cover; background-position: center; height: 140px; position: relative;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=800'); 
+            background-size: cover; background-position: center; height: 160px; position: relative;
         }
-        .logo-container { position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); z-index: 10; }
+        .logo-container { position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); z-index: 10; }
         .logo-profile { 
-            width: 100px; height: 100px; border-radius: 50%; border: 4px solid #FFD700;
+            width: 110px; height: 110px; border-radius: 50%; border: 4px solid #FFD700;
             background-color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.15); object-fit: cover;
         }
-
+        .product-card { border-radius: 20px; border-left: 6px solid #FFD700; }
         .modal-up { animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .option-active { border-color: #E60000; background-color: #fff5f5; color: #E60000; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        input:checked + label { background-color: #E60000; color: white; border-color: #E60000; }
     </style>
 </head>
 <body class="pb-32">
@@ -40,149 +38,331 @@
     </div>
 
     <!-- INFOS DA LOJA -->
-    <div class="bg-yellow-aline pt-14 pb-6 px-6 text-center shadow-md">
+    <div class="bg-yellow-aline pt-16 pb-6 px-6 text-center">
         <h1 class="text-2xl font-bold text-red-600 uppercase tracking-tighter">Pastel da Aline</h1>
         <p class="text-red-800 text-[10px] italic font-medium">"Nunca foi sorte, sempre foi Deus"</p>
-        
         <div class="flex justify-center space-x-4 mt-4">
-            <a href="https://wa.me/5581986811235" class="w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fab fa-whatsapp text-lg"></i></a>
-            <a href="tel:5581986811235" class="w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fas fa-phone-alt text-lg"></i></a>
-            <a href="https://www.google.com/maps/search/Av.+Agamenon+Magalhães+195,+Santo+Amaro" class="w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fas fa-map-marker-alt text-lg"></i></a>
+            <a href="https://wa.me/5581986811235" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fab fa-whatsapp text-xl"></i></a>
+            <a href="https://instagram.com/pastel_da_aline123" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="https://www.google.com/maps/search/Av.+Agamenon+Magalhães+195,+Santo+Amaro" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-red-600 shadow-sm"><i class="fas fa-map-marker-alt text-xl"></i></a>
         </div>
     </div>
 
-    <!-- CATEGORIAS -->
-    <div class="sticky top-0 bg-white/95 backdrop-blur-md z-40 py-4 px-4 flex space-x-3 overflow-x-auto no-scrollbar shadow-sm">
-        <button class="bg-red-600 text-white px-6 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Pastéis</button>
-        <button class="bg-gray-100 text-gray-400 px-6 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Bebidas</button>
+    <!-- NAVEGAÇÃO CATEGORIAS -->
+    <div class="sticky top-0 bg-white/90 backdrop-blur-md z-40 py-4 px-4 flex space-x-3 overflow-x-auto no-scrollbar shadow-sm">
+        <button onclick="scrollToCat('cat-pastel')" class="bg-red-600 text-white px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Pastéis</button>
+        <button onclick="scrollToCat('cat-burger')" class="bg-gray-100 text-gray-500 px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Hambúrgueres</button>
+        <button onclick="scrollToCat('cat-pizza')" class="bg-gray-100 text-gray-500 px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Pizzas</button>
+        <button onclick="scrollToCat('cat-hotdog')" class="bg-gray-100 text-gray-500 px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Cachorro Quente</button>
+        <button onclick="scrollToCat('cat-acai')" class="bg-gray-100 text-gray-500 px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Açaí</button>
+        <button onclick="scrollToCat('cat-bebida')" class="bg-gray-100 text-gray-500 px-5 py-2 rounded-full text-[10px] font-bold whitespace-nowrap uppercase">Bebidas</button>
     </div>
 
-    <!-- PRODUTOS -->
-    <div id="menu" class="p-4 space-y-4">
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-50 flex justify-between items-center border-l-4 border-yellow-400">
-            <div class="flex-1 pr-4">
-                <h3 class="font-bold text-gray-800 text-sm uppercase">Pastel Especial da Aline</h3>
-                <p class="text-[10px] text-gray-400 my-1 leading-tight text-justify">Carne moída premium, ovo, azeitona e o tempero secreto.</p>
-                <p class="text-red-600 font-bold text-lg">R$ 18,00</p>
+    <div id="menu-container" class="p-4 space-y-8">
+        <!-- PASTEL -->
+        <section id="cat-pastel">
+            <h2 class="text-red-600 font-bold border-b-2 border-yellow-400 mb-4 uppercase text-sm">🥟 Pastéis (Monte o seu)</h2>
+            <div class="bg-white p-4 product-card shadow-sm flex justify-between items-center">
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-sm uppercase">Pastel Personalizado</h3>
+                    <p class="text-[10px] text-gray-400 my-1">Escolha até 5 sabores por R$ 8,00. Adicional +R$ 1,00 cada.</p>
+                    <p class="text-red-600 font-bold text-lg">A partir de R$ 8,00</p>
+                </div>
+                <button onclick="openPastelModal()" class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold text-xs uppercase shadow-md">Montar</button>
             </div>
-            <div class="relative w-20 h-20">
-                <img src="https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=200" class="w-full h-full object-cover rounded-xl shadow-inner">
-                <button onclick="add('Pastel Especial', 18.00)" class="absolute -bottom-1 -left-1 bg-red-600 text-white w-8 h-8 rounded-lg shadow-lg flex items-center justify-center font-bold active:scale-90 transition-all">+</button>
+        </section>
+
+        <!-- BATATA FRITA -->
+        <section>
+            <h2 class="text-red-600 font-bold border-b-2 border-yellow-400 mb-4 uppercase text-sm">🍟 Acompanhamentos</h2>
+            <div class="bg-white p-4 product-card shadow-sm flex justify-between items-center">
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-sm uppercase">Batata Frita</h3>
+                    <p class="text-[10px] text-gray-400 my-1">Porção crocante e sequinha.</p>
+                    <p class="text-red-600 font-bold text-lg">R$ 8,00</p>
+                </div>
+                <button onclick="addItem('Batata Frita', 8.00)" class="bg-red-600 text-white w-10 h-10 rounded-xl font-bold">+</button>
             </div>
-        </div>
+        </section>
+
+        <!-- HAMBÚRGUERES -->
+        <section id="cat-burger">
+            <h2 class="text-red-600 font-bold border-b-2 border-yellow-400 mb-4 uppercase text-sm">🍔 Hambúrgueres</h2>
+            <div class="space-y-4" id="list-burgers"></div>
+        </section>
+
+        <!-- PIZZAS -->
+        <section id="cat-pizza">
+            <h2 class="text-red-600 font-bold border-b-2 border-yellow-400 mb-4 uppercase text-sm">🍕 Pizzas (Tamanho G)</h2>
+            <div class="space-y-4" id="list-pizzas"></div>
+        </section>
+
+        <!-- AÇAÍ -->
+        <section id="cat-acai">
+            <h2 class="text-red-600 font-bold border-b-2 border-yellow-400 mb-4 uppercase text-sm">🍧 Açaí Montado</h2>
+            <div class="space-y-4" id="list-acai"></div>
+        </section>
     </div>
 
-    <!-- BARRA DE CARRINHO -->
+    <!-- BOTÃO CARRINHO -->
     <div id="cart-bar" class="fixed bottom-0 left-0 right-0 p-4 z-50 hidden">
         <div class="bg-red-600 text-white p-4 rounded-2xl flex items-center justify-between shadow-2xl">
             <div>
-                <p id="cart-count" class="text-[9px] font-bold opacity-80 uppercase tracking-widest">0 Itens na Sacola</p>
+                <p id="cart-count" class="text-[9px] font-bold opacity-80 uppercase">0 ITENS</p>
                 <p id="cart-total" class="text-lg font-bold">R$ 0,00</p>
             </div>
-            <button onclick="openCheckout()" class="bg-yellow-400 text-red-700 px-6 py-2 rounded-xl font-bold uppercase text-xs shadow-md">Finalizar</button>
+            <button onclick="openCheckout()" class="bg-yellow-400 text-red-700 px-6 py-2 rounded-xl font-bold uppercase text-xs">Finalizar Pedido</button>
         </div>
     </div>
 
-    <!-- MODAL DE CHECKOUT PROFISSIONAL -->
-    <div id="modal-checkout" class="fixed inset-0 bg-black/70 z-[60] hidden flex-col justify-end">
+    <!-- MODAL PASTEL -->
+    <div id="modal-pastel" class="fixed inset-0 bg-black/70 z-[60] hidden flex-col justify-end">
+        <div class="bg-white w-full max-h-[90vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
+            <h2 class="text-xl font-bold text-red-600 mb-2 uppercase">Escolha os Sabores</h2>
+            <p class="text-[10px] text-gray-500 mb-4 italic">Selecione 5 sabores (R$ 8,00). Adicionais R$ 1,00 cada.</p>
+            <div class="grid grid-cols-2 gap-2" id="pastel-flavors-list"></div>
+            <textarea id="pastel-obs" placeholder="Observações (Ex: Sem cebola)" class="w-full mt-4 p-3 bg-gray-50 rounded-xl text-sm border outline-none"></textarea>
+            <button onclick="confirmPastel()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold mt-4 uppercase">Adicionar ao Carrinho</button>
+            <button onclick="closeModal('modal-pastel')" class="w-full py-2 text-gray-400 text-xs font-bold uppercase">Voltar</button>
+        </div>
+    </div>
+
+    <!-- MODAL AÇAÍ -->
+    <div id="modal-acai" class="fixed inset-0 bg-black/70 z-[60] hidden flex-col justify-end">
+        <div class="bg-white w-full max-h-[90vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
+            <h2 id="acai-title" class="text-xl font-bold text-purple-700 mb-4 uppercase">Configurar Açaí</h2>
+            
+            <p class="font-bold text-xs mb-2">ACOMPANHAMENTOS (Selecione):</p>
+            <div class="grid grid-cols-3 gap-2 mb-4 text-[9px]" id="acai-toppings"></div>
+
+            <p class="font-bold text-xs mb-2">FRUTAS:</p>
+            <div class="grid grid-cols-2 gap-2 mb-4 text-[9px]" id="acai-fruits"></div>
+
+            <p class="font-bold text-xs mb-2">CALDAS:</p>
+            <div class="grid grid-cols-3 gap-2 mb-4 text-[9px]" id="acai-syrups"></div>
+
+            <button onclick="confirmAcai()" class="w-full bg-purple-600 text-white py-4 rounded-2xl font-bold uppercase shadow-lg">Confirmar Açaí</button>
+            <button onclick="closeModal('modal-acai')" class="w-full py-2 text-gray-400 text-xs font-bold uppercase">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- MODAL CHECKOUT -->
+    <div id="modal-checkout" class="fixed inset-0 bg-black/70 z-[60] hidden flex-col justify-end text-sm">
         <div class="bg-white w-full max-h-[95vh] rounded-t-[30px] p-6 overflow-y-auto modal-up">
-            <div class="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-6"></div>
-            <h2 class="text-xl font-bold text-center mb-6 text-gray-800 uppercase italic">Dados do Pedido</h2>
-
-            <!-- ENTREGA OU RETIRADA -->
-            <div class="flex space-x-2 mb-6">
-                <button id="mode-del" onclick="setMode('Entrega')" class="flex-1 p-3 border-2 rounded-xl font-bold text-[10px] option-active">PARA ENTREGA</button>
-                <button id="mode-pick" onclick="setMode('Retirada')" class="flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400">RETIRAR NA LOJA</button>
+            <h2 class="text-xl font-bold text-center mb-6 uppercase">Finalizar Pedido</h2>
+            
+            <div class="flex space-x-2 mb-4">
+                <button id="btn-del" onclick="setMode('Entrega')" class="flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-red-600 text-red-600 bg-red-50">ENTREGA</button>
+                <button id="btn-ret" onclick="setMode('Retirada')" class="flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400">RETIRADA</button>
             </div>
 
-            <!-- FORMULÁRIO -->
-            <div class="space-y-3 mb-6">
-                <input type="text" id="cust-name" placeholder="Seu Nome" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-yellow-400 text-sm">
-                <input type="text" id="cust-addr" placeholder="Endereço Completo (Rua, Nº, Bairro)" class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-yellow-400 text-sm">
-            </div>
+            <input type="text" id="cust-name" placeholder="Seu Nome" class="w-full p-4 bg-gray-50 rounded-xl mb-3 outline-none">
+            <input type="text" id="cust-addr" placeholder="Endereço Completo" class="w-full p-4 bg-gray-50 rounded-xl mb-6 outline-none">
 
-            <!-- PAGAMENTO -->
-            <p class="font-bold text-xs text-gray-500 mb-3 uppercase tracking-tighter">Forma de Pagamento:</p>
+            <p class="font-bold text-gray-500 mb-3 uppercase text-[10px]">Pagamento:</p>
             <div class="grid grid-cols-3 gap-2 mb-6">
-                <button onclick="setPay('Pix')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold text-gray-400">
-                    <i class="fas fa-qrcode mb-1 text-blue-500 text-lg"></i>PIX
-                </button>
-                <button onclick="setPay('Cartão')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold text-gray-400">
-                    <i class="fas fa-credit-card mb-1 text-purple-500 text-lg"></i>CARTÃO
-                </button>
-                <button onclick="setPay('Dinheiro')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold text-gray-400">
-                    <i class="fas fa-money-bill-wave mb-1 text-green-500 text-lg"></i>DINHEIRO
-                </button>
+                <button onclick="setPay('Pix')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold"><i class="fas fa-qrcode mb-1 text-blue-500"></i>PIX</button>
+                <button onclick="setPay('Cartão')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold"><i class="fas fa-credit-card mb-1 text-purple-500"></i>CARTÃO</button>
+                <button onclick="setPay('Dinheiro')" class="pay-btn p-3 border rounded-xl flex flex-col items-center text-[9px] font-bold"><i class="fas fa-money-bill-wave mb-1 text-green-500"></i>DINHEIRO</button>
             </div>
 
-            <!-- TROCO -->
-            <div id="troco-box" class="hidden mb-6 animate-pulse">
-                <input type="number" id="troco-val" placeholder="Troco para quanto?" class="w-full p-4 bg-green-50 rounded-xl border border-green-200 outline-none text-sm font-bold text-green-700">
+            <div id="change-box" class="hidden mb-6">
+                <input type="number" id="change-val" placeholder="Troco para quanto?" class="w-full p-4 bg-green-50 rounded-xl outline-none border border-green-200">
             </div>
 
-            <button onclick="sendOrder()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold shadow-xl flex items-center justify-center uppercase tracking-widest active:scale-95 transition-all">
-                <i class="fab fa-whatsapp mr-2 text-xl"></i> Enviar para Aline
+            <button onclick="sendWhatsApp()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold shadow-xl flex items-center justify-center uppercase">
+                <i class="fab fa-whatsapp mr-2 text-xl"></i> Enviar Pedido
             </button>
-            <button onclick="closeCheckout()" class="w-full text-gray-400 text-[10px] font-bold py-4 uppercase underline">Voltar</button>
+            <button onclick="closeModal('modal-checkout')" class="w-full py-4 text-gray-400 text-xs font-bold uppercase">Voltar</button>
         </div>
     </div>
 
     <script>
-        let cart = []; let total = 0; let mode = 'Entrega'; let pay = '';
+        // CONFIGURAÇÕES DE DADOS
+        const pastelFlavors = ["Queijo Coalho", "Catupiry", "Cheddar", "Mussarela", "Prato", "Bacon", "Carne Moída", "Camarão", "Calabresa", "Ovo de Codorna", "Frango", "Charque", "Presunto"];
+        const burgers = [
+            {n: 'X-Burguer Tradicional', p: 6.00, d: 'Pão, carne, salada e molho.'},
+            {n: 'X-Burguer Especial', p: 8.00, d: 'Pão, carne, presunto, salada e molho.'},
+            {n: 'X-Egg-Burguer', p: 9.00, d: 'Pão, carne, ovo, presunto, queijo, salada e molho.'},
+            {n: 'X-Tudo', p: 16.00, d: 'Pão, carne, calabresa, ovo, bacon, frango, queijo, salsicha e salada.'},
+            {n: 'X-Artesanal', p: 12.00, d: 'Pão, carne artesanal, salada e molho.'},
+            {n: 'X-Bacon Artesanal', p: 17.00, d: 'Pão, carne, presunto, queijo cheddar, molho, milho e ervilha.'},
+            {n: 'X-Tudo Artesanal', p: 20.00, d: 'O mais completo com carne artesanal, bacon e calabresa.'}
+        ];
+        const pizzas = [
+            {n: 'Mussarela G', p: 27.00}, {n: 'Calabresa G', p: 30.00}, {n: 'Frango G', p: 30.00}, {n: 'Portuguesa G', p: 32.00}, {n: 'Charque G', p: 35.00}
+        ];
+        const acaiSizes = [
+            {g: '160g', p: 10.00, top: 5, fr: 1, sy: 1},
+            {g: '220g', p: 12.00, top: 6, fr: 1, sy: 1},
+            {g: '320g', p: 16.00, top: 7, fr: 2, sy: 1}
+        ];
+        const acaiToppings = ["Granola", "Chocoball", "Sucrilhos", "Leite em Pó", "Mini Ball", "Paçoca", "Amendoim", "Biscoito", "Jujuba", "M&M", "Ovaltine", "Tubete", "Gotas Chocolate", "Farinha Láctea"];
+        const acaiFruits = ["Morango", "Banana", "Kiwi", "Uva"];
+        const acaiSyrups = ["Leite Condensado", "Morango", "Chocolate"];
 
-        function add(n, p) {
-            cart.push({n, p}); total += p;
-            document.getElementById('cart-bar').classList.remove('hidden');
-            document.getElementById('cart-count').innerText = `${cart.length} ITENS NA SACOLA`;
-            document.getElementById('cart-total').innerText = 'R$ ' + total.toFixed(2);
+        let cart = []; let total = 0; let mode = 'Entrega'; let pay = ''; let currentAcai = null;
+
+        // INICIALIZAÇÃO
+        function init() {
+            // Render Burgers
+            document.getElementById('list-burgers').innerHTML = burgers.map(b => `
+                <div class="bg-white p-4 product-card shadow-sm flex justify-between items-center">
+                    <div class="flex-1 pr-4">
+                        <h3 class="font-bold text-xs uppercase">${b.n}</h3>
+                        <p class="text-[9px] text-gray-400 my-1 leading-tight">${b.d}</p>
+                        <p class="text-red-600 font-bold">R$ ${b.p.toFixed(2)}</p>
+                    </div>
+                    <button onclick="addItem('${b.n}', ${b.p})" class="bg-red-600 text-white w-9 h-9 rounded-xl font-bold shadow-md">+</button>
+                </div>
+            `).join('');
+
+            // Render Pizzas
+            document.getElementById('list-pizzas').innerHTML = pizzas.map(p => `
+                <div class="bg-white p-4 product-card shadow-sm flex justify-between items-center">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xs uppercase">${p.n}</h3>
+                        <p class="text-red-600 font-bold">R$ ${p.p.toFixed(2)}</p>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <button onclick="addItem('${p.n}', ${p.p})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold">+ Simples</button>
+                        <button onclick="addItem('${p.n} c/ Borda', ${p.p + 3})" class="bg-yellow-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold">+ Borda (+R$3)</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Açaí
+            document.getElementById('list-acai').innerHTML = acaiSizes.map((s, idx) => `
+                <div class="bg-white p-4 product-card shadow-sm flex justify-between items-center border-l-purple-600">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xs uppercase">Açaí ${s.g}</h3>
+                        <p class="text-[9px] text-gray-400 my-1 italic">${s.top} Acomp. + ${s.fr} Fruta + ${s.sy} Calda</p>
+                        <p class="text-purple-600 font-bold">R$ ${s.p.toFixed(2)}</p>
+                    </div>
+                    <button onclick="openAcaiModal(${idx})" class="bg-purple-600 text-white px-4 py-2 rounded-xl font-bold text-[10px] uppercase shadow-md">Montar</button>
+                </div>
+            `).join('');
+
+            // Render Pastel Sabores
+            document.getElementById('pastel-flavors-list').innerHTML = pastelFlavors.map(f => `
+                <div>
+                    <input type="checkbox" id="ps-${f}" class="hidden pastel-check" value="${f}">
+                    <label for="ps-${f}" class="block p-2 border rounded-xl text-center text-[10px] font-bold border-gray-100 bg-gray-50">${f}</label>
+                </div>
+            `).join('');
         }
 
-        function openCheckout() {
-            const m = document.getElementById('modal-checkout');
-            m.classList.remove('hidden'); m.classList.add('flex');
+        // LÓGICA DO CARRINHO
+        function addItem(n, p, obs = "") {
+            cart.push({n, p, obs}); total += p;
+            updateCart();
         }
 
-        function closeCheckout() {
-            document.getElementById('modal-checkout').classList.add('hidden');
+        function updateCart() {
+            const bar = document.getElementById('cart-bar');
+            if(cart.length > 0) bar.classList.remove('hidden');
+            document.getElementById('cart-count').innerText = cart.length + " ITENS";
+            document.getElementById('cart-total').innerText = "R$ " + total.toFixed(2);
         }
 
-        function setMode(m) {
-            mode = m;
-            document.getElementById('mode-del').className = m === 'Entrega' ? 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] option-active' : 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400';
-            document.getElementById('mode-pick').className = m === 'Retirada' ? 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] option-active' : 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400';
+        // LÓGICA PASTEL
+        function openPastelModal() { document.getElementById('modal-pastel').classList.remove('hidden'); document.getElementById('modal-pastel').classList.add('flex'); }
+        function confirmPastel() {
+            const selected = Array.from(document.querySelectorAll('.pastel-check:checked')).map(c => c.value);
+            if(selected.length === 0) return alert("Escolha ao menos 1 sabor!");
+            
+            let price = 8.00;
+            if(selected.length > 5) price += (selected.length - 5) * 1.00;
+            
+            const obs = document.getElementById('pastel-obs').value;
+            addItem(`Pastel (${selected.join(', ')})`, price, obs);
+            
+            // Limpar campos
+            document.querySelectorAll('.pastel-check').forEach(c => c.checked = false);
+            document.getElementById('pastel-obs').value = "";
+            closeModal('modal-pastel');
+        }
+
+        // LÓGICA AÇAÍ
+        function openAcaiModal(idx) {
+            currentAcai = acaiSizes[idx];
+            document.getElementById('modal-acai').classList.remove('hidden');
+            document.getElementById('modal-acai').classList.add('flex');
+            document.getElementById('acai-title').innerText = `Açaí ${currentAcai.g}`;
+            
+            // Render selects
+            const renderCheck = (list, container, name) => {
+                document.getElementById(container).innerHTML = list.map(f => `
+                    <div>
+                        <input type="checkbox" id="${name}-${f}" class="hidden ${name}-check" value="${f}">
+                        <label for="${name}-${f}" class="block p-2 border rounded-lg text-center border-gray-100 bg-gray-50">${f}</label>
+                    </div>
+                `).join('');
+            };
+            renderCheck(acaiToppings, 'acai-toppings', 'top');
+            renderCheck(acaiFruits, 'acai-fruits', 'fru');
+            renderCheck(acaiSyrups, 'acai-syrups', 'syr');
+        }
+
+        function confirmAcai() {
+            const tops = Array.from(document.querySelectorAll('.top-check:checked')).map(c => c.value);
+            const frus = Array.from(document.querySelectorAll('.fru-check:checked')).map(c => c.value);
+            const syrs = Array.from(document.querySelectorAll('.syr-check:checked')).map(c => c.value);
+
+            if(tops.length > currentAcai.top || frus.length > currentAcai.fr || syrs.length > currentAcai.sy) {
+                return alert(`Limite excedido! Este açaí permite:\n${currentAcai.top} Acompanhamentos\n${currentAcai.fr} Frutas\n${currentAcai.sy} Caldas`);
+            }
+
+            const desc = `Acomp: ${tops.join(', ')} | Frutas: ${frus.join(', ')} | Caldas: ${syrs.join(', ')}`;
+            addItem(`Açaí ${currentAcai.g}`, currentAcai.p, desc);
+            closeModal('modal-acai');
+        }
+
+        // CHECKOUT E WHATSAPP
+        function openCheckout() { document.getElementById('modal-checkout').classList.remove('hidden'); document.getElementById('modal-checkout').classList.add('flex'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function setMode(m) { 
+            mode = m; 
+            document.getElementById('btn-del').className = m === 'Entrega' ? 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-red-600 text-red-600 bg-red-50' : 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400';
+            document.getElementById('btn-ret').className = m === 'Retirada' ? 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-red-600 text-red-600 bg-red-50' : 'flex-1 p-3 border-2 rounded-xl font-bold text-[10px] border-gray-100 text-gray-400';
             document.getElementById('cust-addr').classList.toggle('hidden', m === 'Retirada');
         }
-
-        function setPay(p) {
-            pay = p;
-            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('option-active', 'border-red-600'));
-            event.currentTarget.classList.add('option-active', 'border-red-600');
-            document.getElementById('troco-box').classList.toggle('hidden', p !== 'Dinheiro');
+        function setPay(p) { 
+            pay = p; 
+            document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('border-red-600', 'text-red-600', 'bg-red-50'));
+            event.currentTarget.classList.add('border-red-600', 'text-red-600', 'bg-red-50');
+            document.getElementById('change-box').classList.toggle('hidden', p !== 'Dinheiro');
         }
 
-        function sendOrder() {
-            const name = document.getElementById('cust-name').value;
-            const addr = document.getElementById('cust-addr').value;
-            const troco = document.getElementById('troco-val').value;
+        function sendWhatsApp() {
+            const nome = document.getElementById('cust-name').value;
+            const end = document.getElementById('cust-addr').value;
+            const troco = document.getElementById('change-val').value;
 
-            if(!name || (mode === 'Entrega' && !addr) || !pay) return alert("Por favor, preencha todos os campos!");
+            if(!nome || (mode === 'Entrega' && !end) || !pay) return alert("Preencha todos os dados!");
 
-            let txt = `*🍔 NOVO PEDIDO - PASTEL DA ALINE*\n`;
+            let txt = `*🍟 NOVO PEDIDO - PASTEL DA ALINE*\n`;
             txt += `------------------------------------\n`;
-            txt += `*Cliente:* ${name}\n`;
-            txt += `*Pedido para:* ${mode}\n`;
-            if(mode === 'Entrega') txt += `*Endereço:* ${addr}\n`;
+            txt += `*Cliente:* ${nome}\n*Modo:* ${mode}\n`;
+            if(mode === 'Entrega') txt += `*Endereço:* ${end}\n`;
             txt += `*Pagamento:* ${pay}\n`;
             if(pay === 'Dinheiro' && troco) txt += `*Troco para:* R$ ${troco}\n`;
             txt += `------------------------------------\n`;
-            txt += `*ITENS:*\n`;
-            cart.forEach(i => txt += `• 1x ${i.n} - R$ ${i.p.toFixed(2)}\n`);
+            txt += `*ITENS DO PEDIDO:*\n`;
+            cart.forEach(i => {
+                txt += `• 1x ${i.n}\n  _R$ ${i.p.toFixed(2)}_\n`;
+                if(i.obs) txt += `  _Obs: ${i.obs}_\n`;
+            });
             txt += `------------------------------------\n`;
-            txt += `*TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-            txt += `_Pedido gerado pelo Cardápio Digital_`;
+            txt += `*VALOR TOTAL: R$ ${total.toFixed(2)}*\n\n`;
+            txt += `_Obrigado, aguardamos sua confirmação!_`;
 
             window.open(`https://wa.me/5581986811235?text=${encodeURIComponent(txt)}`);
         }
+
+        function scrollToCat(id) { document.getElementById(id).scrollIntoView({behavior: 'smooth'}); }
+
+        init();
     </script>
 </body>
 </html>
