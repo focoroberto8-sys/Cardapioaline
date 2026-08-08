@@ -1,196 +1,152 @@
- 
-
-
- 
-
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastel da Aline - Cardápio Digital</title>
+    <title>Pastel da Aline - Cardápio Profissional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
-        .bg-aline-yellow { background-color: #FFD700; }
-        .text-aline-red { color: #E60000; }
-        .bg-aline-red { background-color: #E60000; }
-        .category-scroll::-webkit-scrollbar { display: none; }
-        .product-card { transition: transform 0.2s; border-radius: 12px; }
-        .product-card:active { transform: scale(0.98); }
-        .cart-modal { transition: bottom 0.4s ease; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f4f4; }
+        .header-bg { 
+            background: url('https://images.unsplash.com/photo-1626074353765-517a681e40be?q=80&w=1000') center/cover; 
+            height: 180px; 
+        }
+        .logo-profile {
+            width: 100px; height: 100px;
+            border-radius: 50%; border: 4px solid white;
+            margin-top: -50px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .btn-contact {
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; border: 1px solid #ddd;
+            color: #555; font-size: 18px; transition: 0.3s;
+        }
+        .btn-contact:hover { background-color: #eee; }
+        .category-tab { border-bottom: 2px solid transparent; }
+        .category-tab.active { border-color: #E60000; color: #E60000; font-weight: bold; }
+        .product-card { border-radius: 15px; overflow: hidden; }
+        .cart-footer { border-radius: 25px 25px 0 0; }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-32">
 
-    <!-- HEADER & LOGO -->
-    <div class="bg-aline-red pt-8 pb-16 px-6 rounded-b-[40px] shadow-lg text-center relative">
-        <div class="w-28 h-28 bg-white rounded-full mx-auto border-4 border-aline-yellow shadow-md overflow-hidden mb-2">
-            <!-- Coloque o link da foto do logo aqui -->
-            <img src="https://via.placeholder.com/150?text=Logo+Aline" alt="Pastel da Aline" class="w-full h-full object-cover">
+    <!-- CAPA E LOGO -->
+    <div class="header-bg relative">
+        <div class="absolute top-4 left-4 bg-green-600 text-white text-[10px] px-3 py-1 rounded-full font-bold">
+            ● ABERTO
         </div>
-        <h1 class="text-white text-2xl font-bold">Pastel da Aline</h1>
-        <p class="text-yellow-300 text-xs italic italic">"Nunca foi sorte, sempre foi Deus"</p>
+    </div>
+
+    <div class="bg-white px-6 pb-6 text-center">
+        <div class="flex justify-center">
+            <!-- LOGO DA ALINE -->
+            <img src="https://i.ibb.co/Ld89R7G/logo-aline.jpg" class="logo-profile bg-white object-cover">
+        </div>
         
-        <!-- STATUS BADGE -->
-        <div class="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-white px-6 py-2 rounded-full shadow-md flex items-center space-x-2">
-            <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-            <span class="text-sm font-semibold text-gray-700 uppercase tracking-widest">Aberto agora</span>
+        <h1 class="text-2xl font-bold mt-2 text-gray-800">Pastel da Aline</h1>
+        <p class="text-gray-500 text-xs italic">"Nunca foi sorte, sempre foi Deus"</p>
+
+        <!-- BOTÕES DE CONTATO (IGUAL À FOTO) -->
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="https://wa.me/5581986811235" class="btn-contact"><i class="fab fa-whatsapp"></i></a>
+            <a href="tel:5581986811235" class="btn-contact"><i class="fas fa-phone-alt"></i></a>
+            <a href="https://maps.google.com/?q=Av.+Agamenon+Magalhães+195,+Santo+Amaro" class="btn-contact"><i class="fas fa-map-marker-alt"></i></a>
+            <a href="https://instagram.com/pastel_da_aline123" class="btn-contact"><i class="fab fa-instagram"></i></a>
         </div>
-    </div>
 
-    <!-- INFO LOJA -->
-    <div class="mt-10 px-6 text-center text-gray-600 text-sm">
-        <p><i class="fas fa-map-marker-alt text-aline-red mr-1"></i> Av. Agamenon Magalhães 195, Santo Amaro</p>
-        <p class="mt-1"><i class="fas fa-clock mr-1"></i> Terça à Domingo</p>
-    </div>
-
-    <!-- CATEGORIAS (Scroll Horizontal) -->
-    <div class="mt-6 sticky top-0 bg-gray-50 z-30 py-4 px-4 border-b">
-        <div class="flex space-x-4 overflow-x-auto category-scroll">
-            <button onclick="filterCat('pastéis')" class="bg-aline-yellow text-red-700 px-6 py-2 rounded-full font-bold shadow-sm whitespace-nowrap border-2 border-aline-yellow">Pastéis</button>
-            <button onclick="filterCat('hambúrguer')" class="bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow-sm whitespace-nowrap border-2 border-transparent">Hambúrguer</button>
-            <button onclick="filterCat('pizzas')" class="bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow-sm whitespace-nowrap border-2 border-transparent">Pizzas</button>
-            <button onclick="filterCat('bebidas')" class="bg-white text-gray-500 px-6 py-2 rounded-full font-bold shadow-sm whitespace-nowrap border-2 border-transparent">Bebidas</button>
-        </div>
-    </div>
-
-    <!-- LISTA DE PRODUTOS -->
-    <div id="menu-container" class="px-6 mt-6 space-y-4">
-        <!-- O JS vai preencher aqui -->
-    </div>
-
-    <!-- BARRA FLUTUANTE DE CARRINHO (IGUAL A FOTO) -->
-    <div id="cart-footer" class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-100 p-4 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] z-40 hidden translate-y-full transition-transform duration-300">
-        <div class="flex items-center justify-between max-w-md mx-auto">
-            <div class="flex items-center">
-                <div class="relative mr-4">
-                    <i class="fas fa-shopping-bag text-aline-red text-3xl"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-yellow-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-400 font-bold uppercase">Total do Pedido</p>
-                    <p id="cart-total" class="text-xl font-bold text-gray-800">R$ 0,00</p>
-                </div>
+        <!-- INFO ENTREGA -->
+        <div class="grid grid-cols-2 gap-4 mt-6 text-[11px] text-gray-500 border-t pt-4">
+            <div class="flex flex-col items-center border-r">
+                <span class="font-bold text-gray-800">Pedido Mínimo</span>
+                <span>R$ 20,00</span>
             </div>
-            <button onclick="openCheckout()" class="bg-aline-red text-white px-8 py-3 rounded-2xl font-bold shadow-lg active:scale-95 transition-all">
-                Finalizar <i class="fas fa-chevron-right ml-2 text-xs"></i>
-            </button>
+            <div class="flex flex-col items-center">
+                <span class="font-bold text-gray-800 text-center">Tempo de Entrega</span>
+                <span>30 - 60 min</span>
+            </div>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-3"><i class="fas fa-map-pin"></i> Av. Agamenon Magalhães 195, Santo Amaro</p>
+    </div>
+
+    <!-- MENU DE CATEGORIAS -->
+    <div class="sticky top-0 bg-white z-40 border-b flex overflow-x-auto px-4 py-3 space-x-6 no-scrollbar">
+        <button class="category-tab active whitespace-nowrap text-sm">Pastéis</button>
+        <button class="category-tab text-gray-400 whitespace-nowrap text-sm">Hambúrgueres</button>
+        <button class="category-tab text-gray-400 whitespace-nowrap text-sm">Pizzas</button>
+        <button class="category-tab text-gray-400 whitespace-nowrap text-sm">Bebidas</button>
+    </div>
+
+    <!-- PRODUTOS -->
+    <div class="p-4 space-y-4">
+        <!-- ITEM 1 -->
+        <div class="product-card bg-white p-4 shadow-sm flex justify-between items-center">
+            <div class="flex-1 pr-2">
+                <h3 class="font-bold text-gray-800">Pastel de Carne Especial</h3>
+                <p class="text-xs text-gray-400 my-1">Carne moída, ovo, azeitona e segredo da Aline.</p>
+                <p class="text-green-600 font-bold">R$ 15,00</p>
+            </div>
+            <div class="relative w-24 h-24">
+                <img src="https://images.unsplash.com/photo-1623341214825-9f4f963727da?q=80&w=200" class="w-full h-full object-cover rounded-xl">
+                <button onclick="add('Pastel Carne', 15.00)" class="absolute -bottom-2 -left-2 bg-red-600 text-white w-8 h-8 rounded-full shadow-lg">+</button>
+            </div>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="product-card bg-white p-4 shadow-sm flex justify-between items-center">
+            <div class="flex-1 pr-2">
+                <h3 class="font-bold text-gray-800">Hambúrguer Clássico</h3>
+                <p class="text-xs text-gray-400 my-1">Blend 150g, queijo, pão brioche e maionese.</p>
+                <p class="text-green-600 font-bold">R$ 22,00</p>
+            </div>
+            <div class="relative w-24 h-24">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=200" class="w-full h-full object-cover rounded-xl">
+                <button onclick="add('Hambúrguer Clássico', 22.00)" class="absolute -bottom-2 -left-2 bg-red-600 text-white w-8 h-8 rounded-full shadow-lg">+</button>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL DE CHECKOUT -->
-    <div id="checkout-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-end">
-        <div class="bg-white w-full rounded-t-[30px] p-8 space-y-4 animate-slide-up">
-            <h2 class="text-xl font-bold text-gray-800 border-b pb-2">Finalizar Pedido</h2>
-            <input type="text" id="cust-name" placeholder="Seu nome" class="w-full p-4 bg-gray-100 rounded-xl border-none focus:ring-2 focus:ring-aline-yellow outline-none">
-            <input type="text" id="cust-address" placeholder="Endereço Completo (Rua, Nº, Bairro)" class="w-full p-4 bg-gray-100 rounded-xl border-none focus:ring-2 focus:ring-aline-yellow outline-none">
-            
-            <select id="cust-payment" class="w-full p-4 bg-gray-100 rounded-xl border-none outline-none">
-                <option value="Pix">Pagamento via Pix</option>
-                <option value="Cartão">Cartão (Entregar maquininha)</option>
-                <option value="Dinheiro">Dinheiro (Espécie)</option>
-            </select>
-
-            <button onclick="sendOrder()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-bold text-lg shadow-xl">
-                <i class="fab fa-whatsapp mr-2 text-xl"></i> Enviar Pedido no WhatsApp
+    <!-- RODAPÉ DE CARRINHO (IGUAL À FOTO) -->
+    <div id="cart-btn" class="fixed bottom-0 left-0 right-0 bg-white p-5 cart-footer shadow-[0_-10px_30px_rgba(0,0,0,0.1)] z-50 hidden transition-all">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-shopping-basket text-red-600 text-2xl mr-3"></i>
+                <span id="cart-info" class="font-bold text-gray-700">0 itens</span>
+            </div>
+            <button onclick="finish()" class="bg-red-600 text-white px-10 py-3 rounded-full font-bold shadow-lg">
+                Ver sacola <span class="ml-2 border-l pl-2" id="cart-total">R$ 0,00</span>
             </button>
-            <button onclick="closeCheckout()" class="w-full text-gray-400 font-bold py-2">Voltar ao cardápio</button>
         </div>
     </div>
 
     <script>
-        const menuItems = [
-            { id: 1, cat: 'pastéis', name: 'Pastel de Carne', price: 12.00, desc: 'Carne moída temperada e muito crocante.', img: 'https://via.placeholder.com/100' },
-            { id: 2, cat: 'pastéis', name: 'Pastel de Queijo', price: 12.00, desc: 'Muçarela derretida com orégano.', img: 'https://via.placeholder.com/100' },
-            { id: 3, cat: 'hambúrguer', name: 'X-Bacon Aline', price: 22.00, desc: 'Pão, blend 150g, muito bacon e queijo.', img: 'https://via.placeholder.com/100' },
-            { id: 4, cat: 'pizzas', name: 'Pizza Calabresa', price: 35.00, desc: 'Calabresa fatiada e cebola fresca.', img: 'https://via.placeholder.com/100' },
-            { id: 5, cat: 'bebidas', name: 'Coca-Cola 2L', price: 12.00, desc: 'Gelada e refrescante.', img: 'https://via.placeholder.com/100' }
-        ];
-
         let cart = [];
         let total = 0;
 
-        function renderMenu() {
-            const container = document.getElementById('menu-container');
-            container.innerHTML = menuItems.map(item => `
-                <div class="product-card bg-white p-4 flex justify-between items-center shadow-sm border border-gray-100">
-                    <div class="flex-1 pr-4">
-                        <h3 class="font-bold text-gray-800 text-lg">${item.name}</h3>
-                        <p class="text-gray-400 text-xs mb-2 leading-tight">${item.desc}</p>
-                        <span class="text-aline-red font-bold text-lg">R$ ${item.price.toFixed(2)}</span>
-                    </div>
-                    <div class="relative">
-                        <img src="${item.img}" class="w-24 h-24 rounded-2xl object-cover">
-                        <button onclick="addToCart(${item.id})" class="absolute -bottom-2 -left-2 bg-aline-yellow text-white w-10 h-10 rounded-xl shadow-lg flex items-center justify-center border-2 border-white">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+        function add(n, p) {
+            cart.push({n, p});
+            total += p;
+            document.getElementById('cart-btn').classList.remove('hidden');
+            document.getElementById('cart-info').innerText = cart.length + (cart.length > 1 ? ' itens' : ' item');
+            document.getElementById('cart-total').innerText = 'R$ ' + total.toFixed(2);
         }
 
-        function addToCart(id) {
-            const item = menuItems.find(i => i.id === id);
-            cart.push(item);
-            total += item.price;
-            updateCartUI();
+        function finish() {
+            let nome = prompt("Seu nome:");
+            let end = prompt("Endereço de entrega:");
+            if(!nome || !end) return;
+
+            let msg = `*NOVO PEDIDO - PASTEL DA ALINE*\n\n`;
+            msg += `*Cliente:* ${nome}\n*Endereço:* ${end}\n\n*Itens:*\n`;
+            cart.forEach(i => msg += `• ${i.n} - R$ ${i.p.toFixed(2)}\n`);
+            msg += `\n*TOTAL: R$ ${total.toFixed(2)}*`;
+
+            window.open(`https://wa.me/5581986811235?text=${encodeURIComponent(msg)}`);
         }
-
-        function updateCartUI() {
-            const footer = document.getElementById('cart-footer');
-            if(cart.length > 0) {
-                footer.classList.remove('hidden');
-                footer.style.transform = 'translateY(0)';
-            }
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
-        }
-
-        function openCheckout() {
-            const modal = document.getElementById('checkout-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function closeCheckout() {
-            const modal = document.getElementById('checkout-modal');
-            modal.classList.add('hidden');
-        }
-
-        function sendOrder() {
-            const name = document.getElementById('cust-name').value;
-            const addr = document.getElementById('cust-address').value;
-            const pay = document.getElementById('cust-payment').value;
-
-            if(!name || !addr) return alert("Por favor, preencha nome e endereço!");
-
-            let msg = `*PEDIDO - PASTEL DA ALINE*\n`;
-            msg += `----------------------------\n`;
-            msg += `*Cliente:* ${name}\n`;
-            msg += `*Endereço:* ${addr}\n`;
-            msg += `*Pagamento:* ${pay}\n`;
-            msg += `----------------------------\n`;
-            msg += `*ITENS:*\n`;
-            
-            cart.forEach(item => {
-                msg += `• 1x ${item.name} - R$ ${item.price.toFixed(2)}\n`;
-            });
-
-            msg += `----------------------------\n`;
-            msg += `*TOTAL: R$ ${total.toFixed(2)}*\n\n`;
-            msg += `_"Nunca foi sorte, sempre foi Deus"_`;
-
-            const phone = "5581986811235";
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
-        }
-
-        renderMenu();
     </script>
 </body>
 </html>
 ```
-
----
